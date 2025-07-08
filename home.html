@@ -1,17 +1,24 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Mi Proyecto</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <title>Bienvenido</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
   <div class="welcome-container">
     <h1>¡Bienvenido a tu espacio de proyectos!</h1>
     <p>Ahora puedes comenzar a crear todo lo que imagines.</p>
-    <a href="../index.html">Cerrar Sesión</a>
+    <p><strong>Usuario:</strong> <span id="username"></span></p>
+    <a href="index.html">Cerrar Sesión</a>
   </div>
+
+  <script>
+    // Mostrar nombre de usuario en la página
+    document.getElementById('username').textContent = localStorage.getItem('user') || 'Invitado';
+  </script>
 
 </body>
 </html>
