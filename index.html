@@ -1,90 +1,121 @@
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mantenimiento</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  <!-- Fondo animado -->
-  <div class="background-animation"></div>
+body {
+  font-family: 'Courier New', Courier, monospace;
+  background: #f4f6f8;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  overflow: hidden;
+}
 
-  <div class="container">
-    <h1>⚠️ Esta página está en mantenimiento</h1>
-    <p>Nos disculpamos por las molestias. Estamos trabajando para mejorarla.</p>
-    <p><strong>Regresa en:</strong></p>
-    <div id="countdown"></div>
+.background-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #007acc, #005fa3);
+  z-index: 0;
+  animation: moveBackground 20s linear infinite;
+}
 
-    <div id="game-section" class="game-section">
-      <p>¿Quieres acelerar el mantenimiento?</p>
-      <button id="endMaintenance">Sí, ¡Acabé el mantenimiento!</button>
-    </div>
+@keyframes moveBackground {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
 
-    <div id="message-box" class="message-box" style="display: none;">
-      <p id="randomMessage"></p>
-      <button id="againButton">¿Otra vez?</button>
-    </div>
-  </div>
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 500px;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 1s ease-out;
+}
 
-  <script>
-    // Mensajes aleatorios (bromas, chistes, consejos, etc.)
-    const messages = [
-      "El mantenimiento terminará cuando el universo se acabe.",
-      "No te preocupes, esto es solo un error del sistema.",
-      "La web está en mantenimiento... porque no tiene internet.",
-      "El mantenimiento ha terminado. Ahora la web está en pausa.",
-      "Parece que el servidor se durmió. ¡Buena suerte!",
-      "El mantenimiento es solo un sueño. Despierta.",
-      "Esto es un error. No hay mantenimiento. ¿Vas a creerme?",
-      "El mantenimiento se retrasó. Ahora es oficialmente un evento cultural.",
-      "La web está en mantenimiento. ¡Espera 5 segundos más!",
-      "Este mensaje es aleatorio. No significa nada."
-    ];
+h1 {
+  font-size: 2.5rem;
+  color: #e74c3c;
+  margin-bottom: 1rem;
+}
 
-    const endButton = document.getElementById("endMaintenance");
-    const messageBox = document.getElementById("message-box");
-    const randomMessage = document.getElementById("randomMessage");
-    const againButton = document.getElementById("againButton");
+p {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+}
 
-    endButton.addEventListener("click", () => {
-      showRandomMessage();
-    });
+#countdown {
+  margin-top: 1rem;
+  font-size: 1.3rem;
+  color: #333;
+}
 
-    againButton.addEventListener("click", () => {
-      showRandomMessage();
-    });
+#countdown strong {
+  display: block;
+  margin: 0.5rem 0;
+  color: #2c3e50;
+}
 
-    function showRandomMessage() {
-      const randomIndex = Math.floor(Math.random() * messages.length);
-      randomMessage.textContent = messages[randomIndex];
-      messageBox.style.display = "block";
-      endButton.style.display = "none";
-    }
+.game-section {
+  margin-top: 2rem;
+}
 
-    // Cuenta regresiva
-    const endDate = new Date("2025-12-31T23:59:59").getTime();
+#endMaintenance {
+  padding: 10px 20px;
+  background-color: #007acc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: 'Courier New', Courier, monospace;
+  transition: background 0.3s ease;
+}
 
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = endDate - now;
+#endMaintenance:hover {
+  background-color: #005fa3;
+}
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+.message-box {
+  margin-top: 2rem;
+}
 
-      document.getElementById("countdown").innerHTML = `
-        <p><strong>${days} días</strong></p>
-        <p><strong>${hours} horas</strong></p>
-        <p><strong>${minutes} minutos</strong></p>
-      `;
-    }
+#randomMessage {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
 
-    setInterval(updateCountdown, 1000);
-    updateCountdown(); // Mostrar el conteo inicial
-  </script>
+#againButton {
+  padding: 10px 20px;
+  background-color: #007acc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: 'Courier New', Courier, monospace;
+  transition: background 0.3s ease;
+}
 
-</body>
-</html>
+#againButton:hover {
+  background-color: #005fa3;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
