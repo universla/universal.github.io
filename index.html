@@ -1,29 +1,78 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hola con Buscador</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buscador Interno</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <div class="container">
     <h1>Hola</h1>
-    <form id="searchForm">
-      <input type="text" id="query" placeholder="Buscar en Google..." required>
-      <button type="submit">Buscar</button>
-    </form>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Buscar eventos..." />
+    </div>
+
+    <div id="results" class="results">
+      <!-- Aquí se mostrarán los resultados -->
+    </div>
+
+    <div id="allEvents" class="all-events">
+      <h2>Todos los eventos</h2>
+      <ul id="eventList"></ul>
+    </div>
   </div>
 
   <script>
-    document.getElementById('searchForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const query = document.getElementById('query').value.trim();
-      if (query) {
-        window.location.href = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+    // Lista de eventos (puedes agregar más)
+    const eventos = [
+      "Festival de música indie",
+      "Taller de programación para principiantes",
+      "Conferencia sobre cambio climático",
+      "Exposición de arte digital",
+      "Carrera nocturna 5K",
+      "Mercado de emprendedores locales"
+    ];
+
+    // Mostrar todos los eventos al cargar
+    const eventList = document.getElementById("eventList");
+    eventos.forEach(evento => {
+      const li = document.createElement("li");
+      li.textContent = evento;
+      eventList.appendChild(li);
+    });
+
+    // Función de búsqueda
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      const filtered = eventos.filter(evento => evento.toLowerCase().includes(query));
+
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = ""; // Limpiar resultados anteriores
+
+      if (query === "") {
+        resultsDiv.style.display = "none";
+        return;
       }
+
+      if (filtered.length === 0) {
+        resultsDiv.innerHTML = "<p>No se encontraron eventos.</p>";
+        resultsDiv.style.display = "block";
+        return;
+      }
+
+      const ul = document.createElement("ul");
+      filtered.forEach(evento => {
+        const li = document.createElement("li");
+        li.textContent = evento;
+        ul.appendChild(li);
+      });
+
+      resultsDiv.innerHTML = "<h3>Resultados:</h3>";
+      resultsDiv.appendChild(ul);
+      resultsDiv.style.display = "block";
     });
   </script>
 
