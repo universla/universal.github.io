@@ -19,46 +19,50 @@
     <div id="countdown"></div>
 
     <div id="game-section" class="game-section">
-      <h2>Juego: Adivina el Número</h2>
-      <p>Escribe un número entre 1 y 100:</p>
-      <input type="number" id="guessInput" min="1" max="100" />
-      <button id="guessButton">Adivinar</button>
-      <p id="message"></p>
-      <p id="attempts"></p>
+      <p>¿Quieres acelerar el mantenimiento?</p>
+      <button id="endMaintenance">Sí, ¡Acabé el mantenimiento!</button>
+    </div>
+
+    <div id="message-box" class="message-box" style="display: none;">
+      <p id="randomMessage"></p>
+      <button id="againButton">¿Otra vez?</button>
     </div>
   </div>
 
   <script>
-    // Configuración del juego
-    const numberToGuess = Math.floor(Math.random() * 100) + 1;
-    let attempts = 0;
+    // Mensajes aleatorios (bromas, chistes, consejos, etc.)
+    const messages = [
+      "El mantenimiento terminará cuando el universo se acabe.",
+      "No te preocupes, esto es solo un error del sistema.",
+      "La web está en mantenimiento... porque no tiene internet.",
+      "El mantenimiento ha terminado. Ahora la web está en pausa.",
+      "Parece que el servidor se durmió. ¡Buena suerte!",
+      "El mantenimiento es solo un sueño. Despierta.",
+      "Esto es un error. No hay mantenimiento. ¿Vas a creerme?",
+      "El mantenimiento se retrasó. Ahora es oficialmente un evento cultural.",
+      "La web está en mantenimiento. ¡Espera 5 segundos más!",
+      "Este mensaje es aleatorio. No significa nada."
+    ];
 
-    const guessInput = document.getElementById("guessInput");
-    const guessButton = document.getElementById("guessButton");
-    const message = document.getElementById("message");
-    const attemptsDisplay = document.getElementById("attempts");
+    const endButton = document.getElementById("endMaintenance");
+    const messageBox = document.getElementById("message-box");
+    const randomMessage = document.getElementById("randomMessage");
+    const againButton = document.getElementById("againButton");
 
-    guessButton.addEventListener("click", () => {
-      const userGuess = parseInt(guessInput.value);
-
-      if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
-        message.textContent = "Por favor, ingresa un número válido entre 1 y 100.";
-        return;
-      }
-
-      attempts++;
-      attemptsDisplay.textContent = `Intentos: ${attempts}`;
-
-      if (userGuess === numberToGuess) {
-        message.textContent = `¡Felicidades! Adivinaste el número en ${attempts} intentos.`;
-        guessButton.disabled = true;
-        guessInput.disabled = true;
-      } else if (userGuess < numberToGuess) {
-        message.textContent = "El número es mayor.";
-      } else {
-        message.textContent = "El número es menor.";
-      }
+    endButton.addEventListener("click", () => {
+      showRandomMessage();
     });
+
+    againButton.addEventListener("click", () => {
+      showRandomMessage();
+    });
+
+    function showRandomMessage() {
+      const randomIndex = Math.floor(Math.random() * messages.length);
+      randomMessage.textContent = messages[randomIndex];
+      messageBox.style.display = "block";
+      endButton.style.display = "none";
+    }
 
     // Cuenta regresiva
     const endDate = new Date("2025-12-31T23:59:59").getTime();
