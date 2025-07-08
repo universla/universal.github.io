@@ -1,25 +1,25 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Buscador Interno</title>
+  <title>Eventos Bonitos</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <div class="container">
-    <h1>Hola</h1>
+    <h1>Hola 👋</h1>
+    <p>Encuentra los mejores eventos cerca de ti</p>
 
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="Buscar eventos..." />
     </div>
 
-    <div id="results" class="results">
-      <!-- Aquí se mostrarán los resultados -->
-    </div>
+    <div id="results" class="results"></div>
 
-    <div id="allEvents" class="all-events">
+    <div class="all-events">
       <h2>Todos los eventos</h2>
       <ul id="eventList"></ul>
     </div>
@@ -58,7 +58,7 @@
       }
 
       if (filtered.length === 0) {
-        resultsDiv.innerHTML = "<p>No se encontraron eventos.</p>";
+        resultsDiv.innerHTML = "<p class='no-results'>No se encontraron eventos.</p>";
         resultsDiv.style.display = "block";
         return;
       }
