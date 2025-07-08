@@ -38,6 +38,18 @@ p {
   line-height: 1.6;
 }
 
+#countdown {
+  margin-top: 1rem;
+  font-size: 1.3rem;
+  color: #333;
+}
+
+#countdown strong {
+  display: block;
+  margin: 0.5rem 0;
+  color: #2c3e50;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
