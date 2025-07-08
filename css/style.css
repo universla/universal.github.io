@@ -1,3 +1,5 @@
+
+/* Reset y base */
 * {
   margin: 0;
   padding: 0;
@@ -6,88 +8,94 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: #fff;
+  background-color: #f4f6f8;
+  color: #333;
   line-height: 1.6;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
 }
 
 .container {
-  max-width: 900px;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  max-width: 1000px;
+  margin: auto;
+  padding: 0 20px;
 }
 
-h1 {
-  text-align: center;
-  font-size: 2.2rem;
-  margin-bottom: 2rem;
-  color: #fff;
-}
-
-/* Sección 1: Status del Bot */
-.status-section {
-  margin-bottom: 2rem;
+/* Header */
+.header {
+  background-color: #007acc;
+  color: white;
+  padding: 40px 0;
   text-align: center;
 }
 
-.bot-status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+.header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
 }
 
-.status-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-}
-
-.status-dot.online {
-  background-color: #2ecc71;
-}
-
-.bot-status strong {
-  color: #27ae60;
+.header p {
   font-size: 1.2rem;
+  opacity: 0.9;
 }
 
-/* Sección 2: Categorías de Bots */
-.categories-section h2 {
-  margin-bottom: 1rem;
-  color: #fff;
+/* Main Content */
+.main {
+  padding: 40px 0;
 }
 
-.category-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
+.welcome-section {
+  margin-bottom: 40px;
 }
 
-.category-card {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1.5rem;
-  border-radius: 10px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  backdrop-filter: blur(5px);
+.welcome-section h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #333;
 }
 
-.category-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+.servers-table {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.category-card h3 {
-  margin-bottom: 0.5rem;
-  color: #fff;
-  font-size: 1.1rem;
+.servers-table h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.status-online {
+  color: #2ecc71;
+  font-weight: bold;
+}
+
+.status-offline {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+/* Footer */
+.footer {
+  background-color: #f4f6f8;
+  padding: 20px 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
 }
