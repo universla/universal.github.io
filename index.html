@@ -19,14 +19,49 @@
     <div id="countdown"></div>
 
     <div id="game-section" class="game-section">
-      <p>¿Quieres acelerar el mantenimiento?</p>
-      <button id="endMaintenance">Sí, ¡Acabé el mantenimiento!</button>
+      <h2>Juego: Adivina el Número</h2>
+      <p>Escribe un número entre 1 y 100:</p>
+      <input type="number" id="guessInput" min="1" max="100" />
+      <button id="guessButton">Adivinar</button>
+      <p id="message"></p>
+      <p id="attempts"></p>
     </div>
   </div>
 
   <script>
-    // Fecha de finalización del mantenimiento (ejemplo: 30 días desde hoy)
-    const endDate = new Date("2025-7-8T23:59:59").getTime();
+    // Configuración del juego
+    const numberToGuess = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+
+    const guessInput = document.getElementById("guessInput");
+    const guessButton = document.getElementById("guessButton");
+    const message = document.getElementById("message");
+    const attemptsDisplay = document.getElementById("attempts");
+
+    guessButton.addEventListener("click", () => {
+      const userGuess = parseInt(guessInput.value);
+
+      if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+        message.textContent = "Por favor, ingresa un número válido entre 1 y 100.";
+        return;
+      }
+
+      attempts++;
+      attemptsDisplay.textContent = `Intentos: ${attempts}`;
+
+      if (userGuess === numberToGuess) {
+        message.textContent = `¡Felicidades! Adivinaste el número en ${attempts} intentos.`;
+        guessButton.disabled = true;
+        guessInput.disabled = true;
+      } else if (userGuess < numberToGuess) {
+        message.textContent = "El número es mayor.";
+      } else {
+        message.textContent = "El número es menor.";
+      }
+    });
+
+    // Cuenta regresiva
+    const endDate = new Date("2025-12-31T23:59:59").getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();
@@ -45,22 +80,6 @@
 
     setInterval(updateCountdown, 1000);
     updateCountdown(); // Mostrar el conteo inicial
-
-    // Mini juego
-    const endButton = document.getElementById("endMaintenance");
-    const gameSection = document.getElementById("game-section");
-
-    endButton.addEventListener("click", () => {
-      gameSection.innerHTML = "<p>¡El mantenimiento ha terminado!</p>";
-      endButton.style.display = "none";
-    });
-
-    // Opcional: permitir que el usuario lo active con una tecla (por ejemplo, 'Enter')
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        endButton.click();
-      }
-    });
   </script>
 
 </body>
