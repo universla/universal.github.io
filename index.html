@@ -11,8 +11,32 @@
   <div class="container">
     <h1>⚠️ Esta página está en mantenimiento</h1>
     <p>Nos disculpamos por las molestias. Estamos trabajando para mejorarla.</p>
-    <p>Regresa pronto.</p>
+    <p><strong>Regresa en:</strong></p>
+    <div id="countdown"></div>
   </div>
+
+  <script>
+    // Fecha de finalización del mantenimiento (ejemplo: 30 días desde hoy)
+    const endDate = new Date("2025-10-21T23:59:59").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = endDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+      document.getElementById("countdown").innerHTML = `
+        <p><strong>${days} días</strong></p>
+        <p><strong>${hours} horas</strong></p>
+        <p><strong>${minutes} minutos</strong></p>
+      `;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown(); // Mostrar el conteo inicial
+  </script>
 
 </body>
 </html>
