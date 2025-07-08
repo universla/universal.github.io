@@ -4,77 +4,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Eventos Bonitos</title>
+  <title>Welcome to Status Bots</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <div class="container">
-    <h1>Hola 👋</h1>
-    <p>Encuentra los mejores eventos cerca de ti</p>
+    <h1>Welcome to Status Bots</h1>
 
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Buscar eventos..." />
-    </div>
+    <!-- Status del Bot Principal -->
+    <section class="status-section">
+      <h2>Status del Bot Principal</h2>
+      <div class="bot-status">
+        <span class="status-dot online"></span>
+        <p>Bot Principal: <strong>Online</strong></p>
+      </div>
+    </section>
 
-    <div id="results" class="results"></div>
-
-    <div class="all-events">
-      <h2>Todos los eventos</h2>
-      <ul id="eventList"></ul>
-    </div>
+    <!-- Categorías de Bots -->
+    <section class="categories-section">
+      <h2>Categorías de Bots</h2>
+      <div class="category-list">
+        <div class="category-card">
+          <h3>Moderación</h3>
+          <p>Bots encargados de mantener el orden en servidores.</p>
+        </div>
+        <div class="category-card">
+          <h3>Música</h3>
+          <p>Bots que reproducen música y controlan playlists.</p>
+        </div>
+        <div class="category-card">
+          <h3>Economía</h3>
+          <p>Bots para manejar sistemas monetarios virtuales.</p>
+        </div>
+        <div class="category-card">
+          <h3>Diversión</h3>
+          <p>Bots con juegos, memes y funciones entretenidas.</p>
+        </div>
+      </div>
+    </section>
   </div>
-
-  <script>
-    // Lista de eventos (puedes agregar más)
-    const eventos = [
-      "Festival de música indie",
-      "Taller de programación para principiantes",
-      "Conferencia sobre cambio climático",
-      "Exposición de arte digital",
-      "Carrera nocturna 5K",
-      "Mercado de emprendedores locales"
-    ];
-
-    // Mostrar todos los eventos al cargar
-    const eventList = document.getElementById("eventList");
-    eventos.forEach(evento => {
-      const li = document.createElement("li");
-      li.textContent = evento;
-      eventList.appendChild(li);
-    });
-
-    // Función de búsqueda
-    document.getElementById("searchInput").addEventListener("input", function () {
-      const query = this.value.toLowerCase();
-      const filtered = eventos.filter(evento => evento.toLowerCase().includes(query));
-
-      const resultsDiv = document.getElementById("results");
-      resultsDiv.innerHTML = ""; // Limpiar resultados anteriores
-
-      if (query === "") {
-        resultsDiv.style.display = "none";
-        return;
-      }
-
-      if (filtered.length === 0) {
-        resultsDiv.innerHTML = "<p class='no-results'>No se encontraron eventos.</p>";
-        resultsDiv.style.display = "block";
-        return;
-      }
-
-      const ul = document.createElement("ul");
-      filtered.forEach(evento => {
-        const li = document.createElement("li");
-        li.textContent = evento;
-        ul.appendChild(li);
-      });
-
-      resultsDiv.innerHTML = "<h3>Resultados:</h3>";
-      resultsDiv.appendChild(ul);
-      resultsDiv.style.display = "block";
-    });
-  </script>
 
 </body>
 </html>
