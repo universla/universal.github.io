@@ -3,47 +3,66 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome to Status Bots</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ServerStats Bot</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <div class="container">
-    <h1>Welcome to Status Bots</h1>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <h1>ServerStats Bot</h1>
+      <p>Monitoriza tus servidores en tiempo real</p>
+    </div>
+  </header>
 
-    <!-- Sección 1: Status del Bot -->
-    <section class="status-section">
-      <h2>Status del Bot Principal</h2>
-      <div class="bot-status">
-        <span class="status-dot online"></span>
-        <p>Bot Principal: <strong>Online</strong></p>
-      </div>
-    </section>
+  <!-- Main Content -->
+  <main class="main">
+    <div class="container">
+      <section class="welcome-section">
+        <h2>Bienvenido a ServerStats Bot</h2>
+        <p>Descubre cómo mantener tus servidores siempre activos y funcionando.</p>
+      </section>
 
-    <!-- Sección 2: Categorías de Bots -->
-    <section class="categories-section">
-      <h2>Categorías de Bots</h2>
-      <div class="category-list">
-        <div class="category-card">
-          <h3>Moderación</h3>
-          <p>Bots encargados de mantener el orden en servidores.</p>
-        </div>
-        <div class="category-card">
-          <h3>Música</h3>
-          <p>Bots que reproducen música y controlan playlists.</p>
-        </div>
-        <div class="category-card">
-          <h3>Economía</h3>
-          <p>Bots para manejar sistemas monetarios virtuales.</p>
-        </div>
-        <div class="category-card">
-          <h3>Diversión</h3>
-          <p>Bots con juegos, memes y funciones entretenidas.</p>
-        </div>
-      </div>
-    </section>
-  </div>
+      <section class="servers-table">
+        <h2>Servidores Monitoreados</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Estado</th>
+              <th>Última Actualización</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Server #1</td>
+              <td class="status-online">Online</td>
+              <td>5 minutos atrás</td>
+            </tr>
+            <tr>
+              <td>Server #2</td>
+              <td class="status-offline">Offline</td>
+              <td>1 hora atrás</td>
+            </tr>
+            <tr>
+              <td>Server #3</td>
+              <td class="status-online">Online</td>
+              <td>10 minutos atrás</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2025 ServerStats Bot. Todos los derechos reservados.</p>
+    </div>
+  </footer>
 
 </body>
 </html>
