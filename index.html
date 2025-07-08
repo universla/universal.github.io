@@ -2,17 +2,30 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Bienvenido</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hola con Buscador</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <div class="welcome-container">
-    <h1>¡Bienvenido a tu espacio de proyectos!</h1>
-    <p>Ahora puedes comenzar a crear todo lo que imagines.</p>
-    <a href="#">Cerrar Sesión</a>
+  <div class="container">
+    <h1>Hola</h1>
+    <form id="searchForm">
+      <input type="text" id="query" placeholder="Buscar en Google..." required>
+      <button type="submit">Buscar</button>
+    </form>
   </div>
+
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const query = document.getElementById('query').value.trim();
+      if (query) {
+        window.location.href = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+      }
+    });
+  </script>
 
 </body>
 </html>
