@@ -25,46 +25,52 @@
 
     <div id="message-box" class="message-box" style="display: none;">
       <p id="randomMessage"></p>
-      <p id="eurekaMessage" style="display: none;">Eureka, ya ingresé</p>
     </div>
   </div>
 
   <script>
     // Mensajes aleatorios (bromas, chistes, consejos, etc.)
     const messages = [
-      "El mantenimiento terminará cuando el universo se acabe.",
-      "No te preocupes, esto es solo un error del sistema.",
-      "La web está en mantenimiento... porque no tiene internet.",
-      "El mantenimiento ha terminado. Ahora la web está en pausa.",
-      "Parece que el servidor se durmió. ¡Buena suerte!",
-      "El mantenimiento es solo un sueño. Despierta.",
-      "Este mensaje es aleatorio. No significa nada."
+      "Yaya, vásta.",
+      "No te lo crees, ¿verdad?",
+      "Eso no es válido.",
+      "Intenta de nuevo, pero más rápido.",
+      "No funciona así.",
+      "¿Ya te rindes?",
+      "No te preocupes, esto es solo un error.",
+      "La web está en mantenimiento... porque no tiene internet."
     ];
 
     const endButton = document.getElementById("endMaintenance");
     const messageBox = document.getElementById("message-box");
     const randomMessage = document.getElementById("randomMessage");
-    const eurekaMessage = document.getElementById("eurekaMessage");
+
+    let attempts = 0;
 
     endButton.addEventListener("click", () => {
-      showRandomMessage();
-    });
+      attempts++;
 
-    function showRandomMessage() {
-      const randomIndex = Math.floor(Math.random() * messages.length);
-      randomMessage.textContent = messages[randomIndex];
-      messageBox.style.display = "block";
-      endButton.style.display = "none";
+      if (attempts === 1) {
+        randomMessage.textContent = "Yaya, vásta.";
+        messageBox.style.display = "block";
+      } else if (attempts === 2) {
+        randomMessage.textContent = "Intenta de nuevo, pero más rápido.";
+        messageBox.style.display = "block";
+      } else if (attempts === 3) {
+        randomMessage.textContent = "No te lo crees, ¿verdad?";
+        messageBox.style.display = "block";
+      } else {
+        // Si acierta, abre una nueva pestaña
+        const newWindow = window.open("", "x universal", "width=400,height=200");
+        newWindow.document.write("<h1>¡Bienvenido a x universal!</h1>");
+        newWindow.document.close();
 
-      // Mostrar "Eureka, ya ingresé" después de 2 segundos
-      setTimeout(() => {
-        eurekaMessage.style.display = "block";
-        // Recargar la página después de 2 segundos más
+        // Cierra la pestaña después de 3 minutos
         setTimeout(() => {
-          location.reload();
-        }, 2000);
-      }, 2000);
-    }
+          newWindow.close();
+        }, 180000); // 3 minutos = 180000 ms
+      }
+    });
 
     // Cuenta regresiva
     const endDate = new Date("2025-12-31T23:59:59").getTime();
