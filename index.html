@@ -35,8 +35,6 @@
       "No te lo crees, ¿verdad?",
       "Eso no es válido.",
       "Intenta de nuevo, pero más rápido.",
-      "No funciona así.",
-      "¿Ya te rindes?",
       "No te preocupes, esto es solo un error.",
       "La web está en mantenimiento... porque no tiene internet."
     ];
@@ -60,15 +58,18 @@
         randomMessage.textContent = "No te lo crees, ¿verdad?";
         messageBox.style.display = "block";
       } else {
-        // Si acierta, abre una nueva pestaña
-        const newWindow = window.open("", "x universal", "width=400,height=200");
-        newWindow.document.write("<h1>¡Bienvenido a x universal!</h1>");
-        newWindow.document.close();
+        // Descargar imagen de troll
+        const link = document.createElement('a');
+        link.href = 'troll.jpg';
+        link.download = 'troll.jpg';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
 
-        // Cierra la pestaña después de 3 minutos
+        // Recargar la página después de 1 segundo
         setTimeout(() => {
-          newWindow.close();
-        }, 180000); // 3 minutos = 180000 ms
+          location.reload();
+        }, 1000);
       }
     });
 
