@@ -78,6 +78,28 @@ body {
   transition: opacity 1s ease;
 }
 
+#message {
+  font-size: 1.2rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+}
+
+#playButton {
+  padding: 10px 20px;
+  background-color: #007acc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  transition: background 0.3s ease;
+}
+
+#playButton:hover {
+  background-color: #005fa3;
+}
+
 #countdown {
   font-size: 1.3rem;
   color: #fff;
@@ -85,6 +107,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
+  margin-top: 1.5rem;
 }
 
 #countdown strong {
@@ -99,21 +122,15 @@ body {
   50% { transform: scale(1.05); }
 }
 
-#playButton {
-  margin-top: 1rem;
-  padding: 10px 20px;
-  background-color: #007acc;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-family: 'Segoe UI', sans-serif;
-  transition: background 0.3s ease;
+#dino-game {
+  margin-top: 2rem;
 }
 
-#playButton:hover {
-  background-color: #005fa3;
+#gameCanvas {
+  background: #111;
+  border: 2px solid #fff;
+  display: block;
+  margin: auto;
 }
 
 @keyframes fadeIn {
