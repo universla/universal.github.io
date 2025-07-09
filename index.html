@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mantenimiento</title>
+  <title>En espera</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -13,67 +13,12 @@
   <div class="background-animation"></div>
 
   <div class="container">
-    <h1>⚠️ Esta web está en rendimiento </h1>
-    <p>Nos disculpamos por las no plis nouu.</p>
-    <p><strong>Regresa en:</strong></p>
+    <h1 id="status">En espera</h1>
     <div id="countdown"></div>
-
-    <div id="game-section" class="game-section">
-      <p>¿Quieres acelerar el mantenimiento?</p>
-      <button id="endMaintenance">Sí, ¡Acabé el mantenimiento!</button>
-    </div>
-
-    <div id="message-box" class="message-box" style="display: none;">
-      <p id="randomMessage"></p>
-    </div>
   </div>
 
   <script>
-    // Mensajes aleatorios (bromas, chistes, consejos, etc.)
-    const messages = [
-      "Yaya, vásta.",
-      "No te lo crees, ¿verdad?",
-      "Eso no es válido.",
-      "Intenta de nuevo, pero más rápido.",
-      "No te preocupes, esto es solo un error.",
-      "La web está en mantenimiento... porque no tiene internet."
-    ];
-
-    const endButton = document.getElementById("endMaintenance");
-    const messageBox = document.getElementById("message-box");
-    const randomMessage = document.getElementById("randomMessage");
-
-    let attempts = 0;
-
-    endButton.addEventListener("click", () => {
-      attempts++;
-
-      if (attempts === 1) {
-        randomMessage.textContent = "Yaya, vásta.";
-        messageBox.style.display = "block";
-      } else if (attempts === 2) {
-        randomMessage.textContent = "Intenta de nuevo, pero más rápido.";
-        messageBox.style.display = "block";
-      } else if (attempts === 3) {
-        randomMessage.textContent = "No te lo crees, ¿verdad?";
-        messageBox.style.display = "block";
-      } else {
-        // Descargar imagen de troll
-        const link = document.createElement('a');
-        link.href = 'https://i.pinimg.com/474x/69/e7/dc/69e7dcb43a1318d9af3035fd61aa7e90.jpg ';
-        link.download = 'troll.jpg';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        // Recargar la página después de 1 segundo
-        setTimeout(() => {
-          location.reload();
-        }, 1000);
-      }
-    });
-
-    // Cuenta regresiva
+    // Fecha de finalización (12 de julio de 2025 a las 00:00:00)
     const endDate = new Date("2025-07-12T00:00:00").getTime();
 
     function updateCountdown() {
@@ -83,16 +28,27 @@
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       document.getElementById("countdown").innerHTML = `
         <p><strong>${days} días</strong></p>
         <p><strong>${hours} horas</strong></p>
         <p><strong>${minutes} minutos</strong></p>
+        <p><strong>${seconds} segundos</strong></p>
       `;
     }
 
     setInterval(updateCountdown, 1000);
     updateCountdown(); // Mostrar el conteo inicial
+
+    // Coro: Parpadeo del mensaje "En espera"
+    const statusText = document.getElementById("status");
+    let isBlinking = true;
+
+    setInterval(() => {
+      isBlinking = !isBlinking;
+      statusText.style.opacity = isBlinking ? 1 : 0.3;
+    }, 1000);
   </script>
 
 </body>
