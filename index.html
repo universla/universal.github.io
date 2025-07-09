@@ -16,22 +16,32 @@
   <div class="vinyl-disk"></div>
 
   <div class="container">
-    <h1 id="status">muy pronto</h1>
-    <div id="countdown"></div>
+    <h1 id="status">En espera</h1>
+    <p id="message">Espere por favor...</p>
     <button id="playButton">Reproducir Música</button>
+    <div id="countdown" style="display: none;"></div>
   </div>
 
-  <!-- Música épica (usando archivo .mp3) -->
+  <!-- Música épica de evento final -->
   <audio id="background-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3 " loop></audio>
+
+  <!-- Juego del dinosaurio -->
+  <div id="dino-game" style="display: none;">
+    <h2>🎮 ¡Juega el Dinosaurio!</h2>
+    <p>Presiona la flecha arriba para saltar.</p>
+    <canvas id="gameCanvas" width="600" height="200"></canvas>
+  </div>
 
   <script>
     const audio = document.getElementById("background-music");
     const playButton = document.getElementById("playButton");
+    const statusText = document.getElementById("status");
+    const messageText = document.getElementById("message");
+    const countdownDiv = document.getElementById("countdown");
+    const dinoGame = document.getElementById("dino-game");
 
-    // Bloqueo de autoplay en navegadores
+    // Música
     audio.muted = true;
-
-    // Botón para desbloquear la música
     playButton.addEventListener("click", () => {
       audio.muted = false;
       audio.play().catch(() => {
@@ -39,7 +49,15 @@
       });
     });
 
-    // Fecha de finalización (12 de julio de 2025 a las 00:00:00)
+    // Cambiar mensaje después de 5 segundos
+    setTimeout(() => {
+      statusText.textContent = "Pronto aya";
+      messageText.textContent = "¡El evento está a punto de comenzar!";
+      countdownDiv.style.display = "block";
+      dinoGame.style.display = "block";
+    }, 5000);
+
+    // Cuenta regresiva
     const endDate = new Date("2025-07-12T00:00:00").getTime();
 
     function updateCountdown() {
@@ -51,7 +69,7 @@
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      document.getElementById("countdown").innerHTML = `
+      countdownDiv.innerHTML = `
         <p><strong>${days} días</strong></p>
         <p><strong>${hours} horas</strong></p>
         <p><strong>${minutes} minutos</strong></p>
@@ -62,14 +80,84 @@
     setInterval(updateCountdown, 1000);
     updateCountdown(); // Mostrar el conteo inicial
 
-    // Coro: Parpadeo del mensaje "En espera"
-    const statusText = document.getElementById("status");
-    let isBlinking = true;
+    // Juego del dinosaurio (versión simplificada)
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
 
-    setInterval(() => {
-      isBlinking = !isBlinking;
-      statusText.style.opacity = isBlinking ? 1 : 0.3;
-    }, 1000);
+    let dino = { x: 50, y: 150, width: 40, height: 50, velocity: 0, gravity: 0.5, jumpPower: -10 };
+    let groundY = 180;
+    let obstacles = [];
+    let score = 0;
+    let gameRunning = true;
+
+    function drawDino() {
+      ctx.fillStyle = "#e74c3c";
+      ctx.fillRect(dino.x, dino.y, dino.width, dino.height);
+    }
+
+    function drawObstacle(obstacle) {
+      ctx.fillStyle = "#2ecc71";
+      ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+    }
+
+    function update() {
+      if (!gameRunning) return;
+
+      dino.velocity += dino.gravity;
+      dino.y += dino.velocity;
+
+      if (dino.y + dino.height > groundY) {
+        dino.y = groundY - dino.height;
+        dino.velocity = 0;
+      }
+
+      // Obstáculos
+      if (Math.random() < 0.02) {
+        obstacles.push({ x: 600, y: groundY - 30, width: 20, height: 30 });
+      }
+
+      for (let i = 0; i < obstacles.length; i++) {
+        obstacles[i].x -= 5;
+
+        if (obstacles[i].x + obstacles[i].width < dino.x) {
+          obstacles.splice(i, 1);
+          score++;
+          i--;
+        }
+
+        drawObstacle(obstacles[i]);
+
+        // Colisión
+        if (
+          dino.x < obstacles[i].x + obstacles[i].width &&
+          dino.x + dino.width > obstacles[i].x &&
+          dino.y < obstacles[i].y &&
+          dino.y + dino.height > obstacles[i].y
+        ) {
+          endGame();
+        }
+      }
+
+      drawDino();
+      requestAnimationFrame(update);
+    }
+
+    function startGame() {
+      update();
+    }
+
+    function endGame() {
+      gameRunning = false;
+      alert("¡Perdiste! 🐉");
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.code === "ArrowUp" && dino.y === groundY - dino.height) {
+        dino.velocity = dino.jumpPower;
+      }
+    });
+
+    startGame();
   </script>
 
 </body>
