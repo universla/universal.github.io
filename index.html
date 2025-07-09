@@ -18,15 +18,27 @@
   <div class="container">
     <h1 id="status">En espera</h1>
     <div id="countdown"></div>
+    <button id="playButton">Reproducir Música</button>
   </div>
 
-  <!-- Música épica (usando audio directo) -->
-  <audio id="background-music" autoplay loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3 " type="audio/mpeg">
-    Tu navegador no soporta la reproducción de audio.
-  </audio>
+  <!-- Música épica (usando archivo .mp3) -->
+  <audio id="background-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3 " loop></audio>
 
   <script>
+    const audio = document.getElementById("background-music");
+    const playButton = document.getElementById("playButton");
+
+    // Bloqueo de autoplay en navegadores
+    audio.muted = true;
+
+    // Botón para desbloquear la música
+    playButton.addEventListener("click", () => {
+      audio.muted = false;
+      audio.play().catch(() => {
+        alert("Habilita el sonido en tu navegador para escuchar la música.");
+      });
+    });
+
     // Fecha de finalización (12 de julio de 2025 a las 00:00:00)
     const endDate = new Date("2025-07-12T00:00:00").getTime();
 
