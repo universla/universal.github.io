@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>En espera</title>
+  <title>Temporizador</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -12,31 +12,14 @@
   <!-- Fondo de cables -->
   <div class="cable-background"></div>
 
+  <!-- Palabra oculta en el fondo -->
+  <div class="hidden-text">Guarda silencio</div>
+
   <div class="container">
-    <h1 id="status">En espera</h1>
     <div id="countdown"></div>
   </div>
 
   <script>
-    // Estados que cambiarán cada 3 minutos
-    const statuses = [
-      "En espera",
-      "Pronto aya",
-      "Cerca del evento",
-      "Preparándose",
-      "¡Evento próximo!",
-      "¡Espera más!"
-    ];
-
-    let statusIndex = 0;
-    const statusText = document.getElementById("status");
-
-    // Cambiar estado cada 3 minutos
-    setInterval(() => {
-      statusIndex = (statusIndex + 1) % statuses.length;
-      statusText.textContent = statuses[statusIndex];
-    }, 180000); // 3 minutos = 180000 ms
-
     // Fecha final (12 de julio de 2025 a las 00:00:00)
     const endDate = new Date("2025-07-12T00:00:00").getTime();
 
