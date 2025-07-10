@@ -4,60 +4,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Librería</title>
+  <title>Status - ServerStats Bot</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Fondo de librería -->
-  <div class="library-background"></div>
+  <!-- Fondo suave -->
+  <div class="background"></div>
 
   <div class="container">
-    <h2>Terminal de la Librería</h2>
-    <div class="controls">
-      <button onclick="addCommand('Tíralo')">Tíralo</button>
-      <button onclick="addCommand('Borrar')">Borrar</button>
-      <button onclick="addCommand('Limpiar')">Limpiar</button>
-    </div>
-    <div class="monitor" id="monitor">
-      <pre id="monitor-text">Bienvenido al sistema</pre>
-    </div>
-    <img src="https://i.imgur.com/3GkZtqW.jpg " alt="Imagen tíralo" id="tiralo-image" style="display: none;" />
+    <h1>ServerStats Bot</h1>
+    <p>Monitorea tus servidores en tiempo real</p>
+
+    <section class="status-section">
+      <h2>Status del Servidor</h2>
+      <div class="server-status">
+        <span class="status-dot online"></span>
+        <p>Estado: <strong>Online</strong></p>
+      </div>
+    </section>
+
+    <section class="servers-table">
+      <h2>Servidores Monitoreados</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Última Actualización</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Server #1</td>
+            <td class="status-online">Online</td>
+            <td>5 minutos atrás</td>
+          </tr>
+          <tr>
+            <td>Server #2</td>
+            <td class="status-offline">Offline</td>
+            <td>1 hora atrás</td>
+          </tr>
+          <tr>
+            <td>Server #3</td>
+            <td class="status-online">Online</td>
+            <td>10 minutos atrás</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   </div>
-
-  <script>
-    const monitorText = document.getElementById("monitor-text");
-    const tiraloImage = document.getElementById("tiralo-image");
-
-    function addCommand(command) {
-      if (command === "Tíralo") {
-        monitorText.textContent += `\nComando: Tíralo`;
-        tiraloImage.style.display = "block";
-      } else if (command === "Borrar") {
-        monitorText.textContent += `\nComando: Borrar`;
-      } else if (command === "Limpiar") {
-        monitorText.textContent = "Bienvenido al sistema";
-        tiraloImage.style.display = "none";
-      }
-    }
-
-    // Para permitir que el usuario escriba en el monitor
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        const input = prompt("Escribe lo que quieras:");
-        if (input) {
-          monitorText.textContent += `\n${input}`;
-        }
-      }
-    });
-
-    // Efecto de parpadeo del cursor
-    let blinking = true;
-    setInterval(() => {
-      blinking = !blinking;
-      document.getElementById("cursor").style.opacity = blinking ? 1 : 0;
-    }, 500);
-  </script>
 
 </body>
 </html>
