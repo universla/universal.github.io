@@ -4,30 +4,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Temporizador</title>
+  <title>Librería</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Fondo de papel café -->
-  <div class="paper-background"></div>
+  <!-- Fondo de librería -->
+  <div class="library-background"></div>
 
-  <!-- Cables en el suelo -->
-  <div class="cable-floor"></div>
-
-  <!-- Palabras ocultas en el fondo -->
-  <div class="hidden-text">Guarda silencio</div>
-  <div class="hidden-text">Esto no es real</div>
-  <div class="hidden-text">No hay esperas</div>
-  <div class="hidden-text">Espera... nada</div>
-
-  <!-- Contenedor del temporizador -->
-  <div class="container" id="timer-container">
-    <div id="countdown"></div>
-  </div>
-
-  <!-- Vista tras terminar el temporizador -->
-  <div class="library-view" id="library-view" style="display: none;">
+  <!-- Contenido principal -->
+  <div class="container">
     <h2>Librería de archivos</h2>
     <div class="controls">
       <button onclick="showMessage('Tíralo')">Tíralo</button>
@@ -41,42 +27,17 @@
   </div>
 
   <script>
-    const endDate = new Date("2025-07-12T00:00:00").getTime();
-    const countdownDiv = document.getElementById("countdown");
-    const timerContainer = document.getElementById("timer-container");
-    const libraryView = document.getElementById("library-view");
-    const monitorText = document.getElementById("monitor-text");
-    const tiraloImage = document.getElementById("tiralo-image");
-
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = endDate - now;
-
-      if (distance <= 0) {
-        timerContainer.style.display = "none";
-        libraryView.style.display = "block";
-        return;
-      }
-
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60) / 1000);
-
-      countdownDiv.innerHTML = `
-        <p><strong>${days} días</strong></p>
-        <p><strong>${hours} horas</strong></p>
-        <p><strong>${minutes} minutos</strong></p>
-        <p><strong>${seconds} segundos</strong></p>
-      `;
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown(); // Mostrar el conteo inicial
-
     function showMessage(message) {
-      monitorText.textContent = message;
-      tiraloImage.style.display = "block";
+      const text = document.getElementById("monitor-text");
+      const image = document.getElementById("tiralo-image");
+
+      text.textContent = message;
+
+      if (message === "Tíralo") {
+        image.style.display = "block";
+      } else {
+        image.style.display = "none";
+      }
     }
   </script>
 
