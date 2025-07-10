@@ -21,24 +21,49 @@
   <div class="hidden-text">No hay esperas</div>
   <div class="hidden-text">Espera... nada</div>
 
-  <div class="container">
+  <!-- Contenedor del temporizador -->
+  <div class="container" id="timer-container">
     <div id="countdown"></div>
   </div>
 
+  <!-- Vista tras terminar el temporizador -->
+  <div class="library-view" id="library-view" style="display: none;">
+    <h2>Librería de archivos</h2>
+    <div class="controls">
+      <button onclick="showMessage('Tíralo')">Tíralo</button>
+      <button onclick="showMessage('Borrar')">Borrar</button>
+      <button onclick="showMessage('Limpiar')">Limpiar</button>
+    </div>
+    <div class="monitor" id="monitor">
+      <p id="monitor-text">Bienvenido al sistema</p>
+    </div>
+    <img src="https://i.imgur.com/3GkZtqW.jpg " alt="Imagen tíralo" id="tiralo-image" style="display: none;" />
+  </div>
+
   <script>
-    // Fecha final (12 de julio de 2025 a las 00:00:00)
     const endDate = new Date("2025-07-12T00:00:00").getTime();
+    const countdownDiv = document.getElementById("countdown");
+    const timerContainer = document.getElementById("timer-container");
+    const libraryView = document.getElementById("library-view");
+    const monitorText = document.getElementById("monitor-text");
+    const tiraloImage = document.getElementById("tiralo-image");
 
     function updateCountdown() {
       const now = new Date().getTime();
       const distance = endDate - now;
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      if (distance <= 0) {
+        timerContainer.style.display = "none";
+        libraryView.style.display = "block";
+        return;
+      }
 
-      document.getElementById("countdown").innerHTML = `
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60) / 1000);
+
+      countdownDiv.innerHTML = `
         <p><strong>${days} días</strong></p>
         <p><strong>${hours} horas</strong></p>
         <p><strong>${minutes} minutos</strong></p>
@@ -48,6 +73,11 @@
 
     setInterval(updateCountdown, 1000);
     updateCountdown(); // Mostrar el conteo inicial
+
+    function showMessage(message) {
+      monitorText.textContent = message;
+      tiraloImage.style.display = "block";
+    }
   </script>
 
 </body>
