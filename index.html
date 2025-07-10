@@ -9,15 +9,23 @@
 </head>
 <body>
 
-  <!-- Fondo suave -->
+  <!-- Fondo animado -->
   <div class="background"></div>
 
   <div class="container">
     <h1>ServerStats Bot</h1>
     <p>Monitorea tus servidores en tiempo real</p>
 
-    <!-- Sección: Estado del Servidor -->
-    <section class="status-section">
+    <!-- Menú de navegación -->
+    <nav class="menu">
+      <button onclick="showSection('status')">Estado</button>
+      <button onclick="showSection('servers')">Servidores</button>
+      <button onclick="showSection('history')">Historial</button>
+      <button onclick="showSection('settings')">Configuración</button>
+    </nav>
+
+    <!-- Secciones -->
+    <section id="status" class="section active">
       <h2>Estado del Servidor</h2>
       <div class="server-status">
         <span class="status-dot online"></span>
@@ -25,8 +33,7 @@
       </div>
     </section>
 
-    <!-- Sección: Servidores Monitoreados -->
-    <section class="servers-table">
+    <section id="servers" class="section">
       <h2>Servidores Monitoreados</h2>
       <table>
         <thead>
@@ -56,8 +63,7 @@
       </table>
     </section>
 
-    <!-- Sección: Historial -->
-    <section class="history-section">
+    <section id="history" class="section">
       <h2>Historial de Estados</h2>
       <ul>
         <li><strong>12:00 PM:</strong> Server #1 Online</li>
@@ -66,12 +72,21 @@
       </ul>
     </section>
 
-    <!-- Sección: Configuración -->
-    <section class="settings-section">
+    <section id="settings" class="section">
       <h2>Configuración</h2>
       <p>Personaliza tu experiencia de monitoreo.</p>
     </section>
   </div>
+
+  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(section => {
+        section.classList.remove('active');
+      });
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
 
 </body>
 </html>
