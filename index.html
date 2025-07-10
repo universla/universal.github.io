@@ -19,7 +19,9 @@
     <!-- Sección de inicio de sesión -->
     <section id="login-section" class="section active">
       <h2>Inicia sesión con Discord</h2>
-      <button onclick="loginDiscord()">Iniciar Sesión</button>
+      <a href="https://discord.com/api/oauth2/authorize?client_id=TU_CLIENT_ID&redirect_uri=http://localhost:8000&response_type=token&scope=identify">
+        <button>Iniciar Sesión con Discord</button>
+      </a>
     </section>
 
     <!-- Sección de información del usuario -->
@@ -94,7 +96,6 @@
       <ul>
         <li><strong>12:00 PM:</strong> Server #1 Online</li>
         <li><strong>11:55 AM:</strong> Server #2 Offline</li>
-        <li><strong>11:45 AM:</strong> Server #1 Online</li>
       </ul>
     </section>
 
@@ -106,23 +107,26 @@
   </div>
 
   <script>
-    // Simular inicio de sesión de Discord
-    function loginDiscord() {
-      const user = {
-        username: "ExampleUser",
-        avatar: "https://i.imgur.com/3GkZtqW.jpg ",
-        role: "Administrador"
-      };
+    // Simular el login con OAuth2
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("access_token");
 
-      document.getElementById("user-name").textContent = user.username;
-      document.getElementById("user-id").textContent = "ID: " + Math.floor(Math.random() * 1000000);
-      document.getElementById("user-role").textContent = "Rol: " + user.role;
-      document.getElementById("user-avatar").src = user.avatar;
-
-      showSection("user-info");
+    if (token) {
+      fetch(' https://discord.com/api/users/ @me', {
+        headers: {
+          'Authorization': 'Bearer ' + token
+        }
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("user-name").textContent = data.username;
+        document.getElementById("user-id").textContent = "ID: " + data.id;
+        document.getElementById("user-role").textContent = "Rol: " + "Administrador";
+        document.getElementById("user-avatar").src = `https://cdn.discordapp.com/avatars/ ${data.id}/${data.avatar}.png`;
+        showSection("user-info");
+      });
     }
 
-    // Mostrar sección según el botón seleccionado
     function showSection(id) {
       const sections = document.querySelectorAll('.section');
       sections.forEach(section => {
