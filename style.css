@@ -110,3 +110,64 @@ body {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Vista de librería */
+.library-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://images.unsplash.com/photo-1509418341062-3b36d62b618a?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: 'Courier New', sans-serif;
+  z-index: 4;
+}
+
+.controls {
+  margin-bottom: 2rem;
+}
+
+.controls button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.controls button:hover {
+  background-color: #333;
+}
+
+.monitor {
+  background: #000;
+  color: #0f0;
+  padding: 2rem;
+  border: 2px solid #0f0;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  width: 80%;
+  max-width: 600px;
+  text-align: left;
+  box-shadow: 0 0 20px #000;
+}
+
+#monitor-text {
+  font-size: 1.2rem;
+  white-space: pre-wrap;
+}
+
+#tiralo-image {
+  width: 300px;
+  height: auto;
+}
