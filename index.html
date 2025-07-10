@@ -22,9 +22,10 @@
       <button onclick="showSection('servers')">Servidores</button>
       <button onclick="showSection('history')">Historial</button>
       <button onclick="showSection('settings')">Configuración</button>
+      <button onclick="showSection('discord')">Discord</button>
     </nav>
 
-    <!-- Secciones -->
+    <!-- Sección: Estado del Servidor -->
     <section id="status" class="section active">
       <h2>Estado del Servidor</h2>
       <div class="server-status">
@@ -33,6 +34,7 @@
       </div>
     </section>
 
+    <!-- Sección: Servidores Monitoreados -->
     <section id="servers" class="section">
       <h2>Servidores Monitoreados</h2>
       <table>
@@ -63,6 +65,7 @@
       </table>
     </section>
 
+    <!-- Sección: Historial -->
     <section id="history" class="section">
       <h2>Historial de Estados</h2>
       <ul>
@@ -72,9 +75,23 @@
       </ul>
     </section>
 
+    <!-- Sección: Configuración -->
     <section id="settings" class="section">
       <h2>Configuración</h2>
       <p>Personaliza tu experiencia de monitoreo.</p>
+    </section>
+
+    <!-- Sección: Usuario de Discord -->
+    <section id="discord" class="section">
+      <h2>Usuario de Discord</h2>
+      <div class="discord-user">
+        <img src="https://i.imgur.com/3GkZtqW.jpg " alt="Avatar de usuario" />
+        <div class="user-info">
+          <h3>Usuario: @ExampleUser</h3>
+          <p>ID: 1234567890</p>
+          <p>Rol: Administrador</p>
+        </div>
+      </div>
     </section>
   </div>
 
