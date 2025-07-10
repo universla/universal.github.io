@@ -181,6 +181,36 @@ th {
   margin-top: 1rem;
 }
 
+.discord-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.discord-user img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #007acc;
+}
+
+.user-info {
+  text-align: left;
+}
+
+.user-info h3 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.user-info p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0.5rem 0;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
