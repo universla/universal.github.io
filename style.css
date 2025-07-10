@@ -37,22 +37,29 @@ body {
   z-index: 0;
 }
 
+.hidden-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: #0f0;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+  mix-blend-mode: screen;
+}
+
 .container {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   max-width: 500px;
   padding: 2rem;
   background: rgba(0, 0, 0, 0.7);
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   animation: fadeIn 1s ease-out;
-}
-
-#status {
-  font-size: 2.5rem;
-  color: #0f0;
-  margin-bottom: 1rem;
-  transition: opacity 1s ease;
 }
 
 #countdown {
