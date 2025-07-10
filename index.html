@@ -16,18 +16,18 @@
     <h1>ServerStats Bot</h1>
     <p>Monitorea tus servidores en tiempo real</p>
 
-    <!-- Sección de inicio de sesión -->
-    <section id="login-section" class="section active">
+    <!-- Sección: Login de Discord -->
+    <section id="login-section">
       <h2>Inicia sesión con Discord</h2>
-      <a href="https://discord.com/api/oauth2/authorize?client_id=TU_CLIENT_ID&redirect_uri=http://localhost:8000&response_type=token&scope=identify">
+      <a href=" https://discord.com/oauth2/authorize?client_id=1392829126372622420&redirect_uri=http://localhost:800&response_type=code&scope=identify">
         <button>Iniciar Sesión con Discord</button>
       </a>
     </section>
 
-    <!-- Sección de información del usuario -->
-    <section id="user-info" class="section">
+    <!-- Sección: Información del usuario -->
+    <section id="user-info" style="display: none;">
       <h2>Usuario de Discord</h2>
-      <div class="discord-user">
+      <div class="user-card">
         <img id="user-avatar" src="" alt="Avatar de usuario" />
         <div class="user-details">
           <h3 id="user-name">Cargando...</h3>
@@ -36,112 +36,43 @@
         </div>
       </div>
     </section>
-
-    <!-- Sección de información adicional -->
-    <section id="extra-info" class="section">
-      <h2>Datos adicionales</h2>
-      <form id="extra-form">
-        <label for="user-name">Nombre:</label>
-        <input type="text" id="user-name" placeholder="Ingresa tu nombre" required><br>
-        <label for="user-role">Rol:</label>
-        <input type="text" id="user-role" placeholder="Ingresa tu rol" required><br>
-        <button type="submit">Guardar</button>
-      </form>
-      <div id="saved-info" style="margin-top: 1rem;"></div>
-    </section>
-
-    <!-- Sección: Estado del Servidor -->
-    <section id="status" class="section">
-      <h2>Estado del Servidor</h2>
-      <div class="server-status">
-        <span class="status-dot online"></span>
-        <p>Estado: <strong>Online</strong></p>
-      </div>
-    </section>
-
-    <!-- Sección: Servidores Monitoreados -->
-    <section id="servers" class="section">
-      <h2>Servidores Monitoreados</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Estado</th>
-            <th>Última Actualización</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Server #1</td>
-            <td class="status-online">Online</td>
-            <td>5 minutos atrás</td>
-          </tr>
-          <tr>
-            <td>Server #2</td>
-            <td class="status-offline">Offline</td>
-            <td>1 hora atrás</td>
-          </tr>
-          <tr>
-            <td>Server #3</td>
-            <td class="status-online">Online</td>
-            <td>10 minutos atrás</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- Sección: Historial -->
-    <section id="history" class="section">
-      <h2>Historial de Estados</h2>
-      <ul>
-        <li><strong>12:00 PM:</strong> Server #1 Online</li>
-        <li><strong>11:55 AM:</strong> Server #2 Offline</li>
-      </ul>
-    </section>
-
-    <!-- Sección: Configuración -->
-    <section id="settings" class="section">
-      <h2>Configuración</h2>
-      <p>Personaliza tu experiencia de monitoreo.</p>
-    </section>
   </div>
 
   <script>
-    // Simular el login con OAuth2
+    // Verificar si hay un token en la URL
     const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("access_token");
+    const code = urlParams.get("code");
 
-    if (token) {
-      fetch(' https://discord.com/oauth2/authorize?client_id=1392829126372622420&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A800&scope=identify', {
+    if (code) {
+      // Simular el proceso de obtención del token (en producción necesitarías un backend)
+      fetch('http://localhost:800', {
+        method: 'POST',
         headers: {
-          'Authorization': 'Bearer ' + token
-        }
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ code })
       })
       .then(res => res.json())
       .then(data => {
-        document.getElementById("user-name").textContent = data.username;
-        document.getElementById("user-id").textContent = "ID: " + data.id;
-        document.getElementById("user-role").textContent = "Rol: " + "Administrador";
-        document.getElementById("user-avatar").src = `https://cdn.discordapp.com/avatars/ ${data.id}/${data.avatar}.png`;
-        showSection("user-info");
-      });
-    }
+        const { access_token } = data;
 
-    function showSection(id) {
-      const sections = document.querySelectorAll('.section');
-      sections.forEach(section => {
-        section.classList.remove('active');
-      });
-      document.getElementById(id).classList.add('active');
+        fetch(' https://discord.com/api/users/ @me', {
+          headers: {
+            'Authorization': 'Bearer ' + access_token
+          }
+        })
+        .then(res => res.json())
+        .then(user => {
+          document.getElementById("user-name").textContent = user.username;
+          document.getElementById("user-id").textContent = "ID: " + user.id;
+          document.getElementById("user-role").textContent = "Rol: Administrador";
+          document.getElementById("user-avatar").src = `https://cdn.discordapp.com/avatars/ ${user.id}/${user.avatar}.png`;
+          document.getElementById("login-section").style.display = "none";
+          document.getElementById("user-info").style.display = "block";
+        });
+      })
+      .catch(err => console.error(err));
     }
-
-    // Formulario de información adicional
-    document.getElementById("extra-form").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const name = document.getElementById("user-name").value;
-      const role = document.getElementById("user-role").value;
-      document.getElementById("saved-info").innerHTML = `<p><strong>Nombre:</strong> ${name}</p><p><strong>Rol:</strong> ${role}</p>`;
-    });
   </script>
 
 </body>
