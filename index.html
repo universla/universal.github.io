@@ -12,13 +12,12 @@
   <!-- Fondo de librería -->
   <div class="library-background"></div>
 
-  <!-- Contenido principal -->
   <div class="container">
-    <h2>Librería de archivos</h2>
+    <h2>Terminal de la Librería</h2>
     <div class="controls">
-      <button onclick="showMessage('Tíralo')">Tíralo</button>
-      <button onclick="showMessage('Borrar')">Borrar</button>
-      <button onclick="showMessage('Limpiar')">Limpiar</button>
+      <button onclick="executeCommand('Tíralo')">Tíralo</button>
+      <button onclick="executeCommand('Borrar')">Borrar</button>
+      <button onclick="executeCommand('Limpiar')">Limpiar</button>
     </div>
     <div class="monitor" id="monitor">
       <p id="monitor-text">Bienvenido al sistema</p>
@@ -27,18 +26,29 @@
   </div>
 
   <script>
-    function showMessage(message) {
-      const text = document.getElementById("monitor-text");
-      const image = document.getElementById("tiralo-image");
+    const monitorText = document.getElementById("monitor-text");
+    const tiraloImage = document.getElementById("tiralo-image");
 
-      text.textContent = message;
-
-      if (message === "Tíralo") {
-        image.style.display = "block";
-      } else {
-        image.style.display = "none";
+    function executeCommand(command) {
+      if (command === "Tíralo") {
+        monitorText.textContent = "Comando: Tíralo";
+        tiraloImage.style.display = "block";
+      } else if (command === "Borrar") {
+        monitorText.textContent = "Comando: Borrar";
+      } else if (command === "Limpiar") {
+        monitorText.textContent = "Comando: Limpiar";
       }
     }
+
+    // Para permitir que el usuario escriba en el monitor
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const input = prompt("Escribe lo que quieras:");
+        if (input) {
+          monitorText.textContent = input;
+        }
+      }
+    });
   </script>
 
 </body>
