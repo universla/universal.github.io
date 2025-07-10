@@ -80,6 +80,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
+  text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
 }
 
 #countdown strong {
@@ -87,6 +88,7 @@ body {
   font-weight: bold;
   color: #0f0;
   animation: pulse 1.5s infinite;
+  text-shadow: 0 0 5px #0f0, 0 0 10px #0f0;
 }
 
 @keyframes pulse {
