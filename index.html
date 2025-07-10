@@ -16,17 +16,40 @@
     <h1>ServerStats Bot</h1>
     <p>Monitorea tus servidores en tiempo real</p>
 
-    <!-- Menú de navegación -->
-    <nav class="menu">
-      <button onclick="showSection('status')">Estado</button>
-      <button onclick="showSection('servers')">Servidores</button>
-      <button onclick="showSection('history')">Historial</button>
-      <button onclick="showSection('settings')">Configuración</button>
-      <button onclick="showSection('discord')">Discord</button>
-    </nav>
+    <!-- Sección de inicio de sesión -->
+    <section id="login-section" class="section active">
+      <h2>Inicia sesión con Discord</h2>
+      <button onclick="loginDiscord()">Iniciar Sesión</button>
+    </section>
+
+    <!-- Sección de información del usuario -->
+    <section id="user-info" class="section">
+      <h2>Usuario de Discord</h2>
+      <div class="discord-user">
+        <img id="user-avatar" src="" alt="Avatar de usuario" />
+        <div class="user-details">
+          <h3 id="user-name">Cargando...</h3>
+          <p id="user-id">Cargando...</p>
+          <p id="user-role">Cargando...</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de información adicional -->
+    <section id="extra-info" class="section">
+      <h2>Datos adicionales</h2>
+      <form id="extra-form">
+        <label for="user-name">Nombre:</label>
+        <input type="text" id="user-name" placeholder="Ingresa tu nombre" required><br>
+        <label for="user-role">Rol:</label>
+        <input type="text" id="user-role" placeholder="Ingresa tu rol" required><br>
+        <button type="submit">Guardar</button>
+      </form>
+      <div id="saved-info" style="margin-top: 1rem;"></div>
+    </section>
 
     <!-- Sección: Estado del Servidor -->
-    <section id="status" class="section active">
+    <section id="status" class="section">
       <h2>Estado del Servidor</h2>
       <div class="server-status">
         <span class="status-dot online"></span>
@@ -80,22 +103,26 @@
       <h2>Configuración</h2>
       <p>Personaliza tu experiencia de monitoreo.</p>
     </section>
-
-    <!-- Sección: Usuario de Discord -->
-    <section id="discord" class="section">
-      <h2>Usuario de Discord</h2>
-      <div class="discord-user">
-        <img src="https://i.imgur.com/3GkZtqW.jpg " alt="Avatar de usuario" />
-        <div class="user-info">
-          <h3>Usuario: @ExampleUser</h3>
-          <p>ID: 1234567890</p>
-          <p>Rol: Administrador</p>
-        </div>
-      </div>
-    </section>
   </div>
 
   <script>
+    // Simular inicio de sesión de Discord
+    function loginDiscord() {
+      const user = {
+        username: "ExampleUser",
+        avatar: "https://i.imgur.com/3GkZtqW.jpg ",
+        role: "Administrador"
+      };
+
+      document.getElementById("user-name").textContent = user.username;
+      document.getElementById("user-id").textContent = "ID: " + Math.floor(Math.random() * 1000000);
+      document.getElementById("user-role").textContent = "Rol: " + user.role;
+      document.getElementById("user-avatar").src = user.avatar;
+
+      showSection("user-info");
+    }
+
+    // Mostrar sección según el botón seleccionado
     function showSection(id) {
       const sections = document.querySelectorAll('.section');
       sections.forEach(section => {
@@ -103,6 +130,14 @@
       });
       document.getElementById(id).classList.add('active');
     }
+
+    // Formulario de información adicional
+    document.getElementById("extra-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("user-name").value;
+      const role = document.getElementById("user-role").value;
+      document.getElementById("saved-info").innerHTML = `<p><strong>Nombre:</strong> ${name}</p><p><strong>Rol:</strong> ${role}</p>`;
+    });
   </script>
 
 </body>
