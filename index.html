@@ -15,12 +15,12 @@
   <div class="container">
     <h2>Terminal de la Librería</h2>
     <div class="controls">
-      <button onclick="executeCommand('Tíralo')">Tíralo</button>
-      <button onclick="executeCommand('Borrar')">Borrar</button>
-      <button onclick="executeCommand('Limpiar')">Limpiar</button>
+      <button onclick="addCommand('Tíralo')">Tíralo</button>
+      <button onclick="addCommand('Borrar')">Borrar</button>
+      <button onclick="addCommand('Limpiar')">Limpiar</button>
     </div>
     <div class="monitor" id="monitor">
-      <p id="monitor-text">Bienvenido al sistema</p>
+      <pre id="monitor-text">Bienvenido al sistema</pre>
     </div>
     <img src="https://i.imgur.com/3GkZtqW.jpg " alt="Imagen tíralo" id="tiralo-image" style="display: none;" />
   </div>
@@ -29,14 +29,15 @@
     const monitorText = document.getElementById("monitor-text");
     const tiraloImage = document.getElementById("tiralo-image");
 
-    function executeCommand(command) {
+    function addCommand(command) {
       if (command === "Tíralo") {
-        monitorText.textContent = "Comando: Tíralo";
+        monitorText.textContent += `\nComando: Tíralo`;
         tiraloImage.style.display = "block";
       } else if (command === "Borrar") {
-        monitorText.textContent = "Comando: Borrar";
+        monitorText.textContent += `\nComando: Borrar`;
       } else if (command === "Limpiar") {
-        monitorText.textContent = "Comando: Limpiar";
+        monitorText.textContent = "Bienvenido al sistema";
+        tiraloImage.style.display = "none";
       }
     }
 
@@ -45,10 +46,17 @@
       if (e.key === "Enter") {
         const input = prompt("Escribe lo que quieras:");
         if (input) {
-          monitorText.textContent = input;
+          monitorText.textContent += `\n${input}`;
         }
       }
     });
+
+    // Efecto de parpadeo del cursor
+    let blinking = true;
+    setInterval(() => {
+      blinking = !blinking;
+      document.getElementById("cursor").style.opacity = blinking ? 1 : 0;
+    }, 500);
   </script>
 
 </body>
