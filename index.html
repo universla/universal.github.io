@@ -12,8 +12,11 @@
   <!-- Fondo de cables -->
   <div class="cable-background"></div>
 
-  <!-- Palabra oculta en el fondo -->
+  <!-- Palabras ocultas en el fondo -->
   <div class="hidden-text">Guarda silencio</div>
+  <div class="hidden-text">Esto no es real</div>
+  <div class="hidden-text">No hay esperas</div>
+  <div class="hidden-text">Espera... nada</div>
 
   <div class="container">
     <div id="countdown"></div>
@@ -32,44 +35,12 @@
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      const romanDays = convertToRoman(days);
-      const romanHours = convertToRoman(hours);
-      const romanMinutes = convertToRoman(minutes);
-      const romanSeconds = convertToRoman(seconds);
-
       document.getElementById("countdown").innerHTML = `
-        <p><strong>${romanDays}</strong></p>
-        <p><strong>${romanHours}</strong></p>
-        <p><strong>${romanMinutes}</strong></p>
-        <p><strong>${romanSeconds}</strong></p>
+        <p><strong>${days} días</strong></p>
+        <p><strong>${hours} horas</strong></p>
+        <p><strong>${minutes} minutos</strong></p>
+        <p><strong>${seconds} segundos</strong></p>
       `;
-    }
-
-    function convertToRoman(num) {
-      const romanNumerals = [
-        { value: 1000, symbol: "M" },
-        { value: 900, symbol: "CM" },
-        { value: 500, symbol: "D" },
-        { value: 400, symbol: "CD" },
-        { value: 100, symbol: "C" },
-        { value: 90, symbol: "XC" },
-        { value: 50, symbol: "L" },
-        { value: 40, symbol: "XL" },
-        { value: 10, symbol: "X" },
-        { value: 9, symbol: "IX" },
-        { value: 5, symbol: "V" },
-        { value: 4, symbol: "IV" },
-        { value: 1, symbol: "I" }
-      ];
-
-      let res = "";
-      for (let i = 0; i < romanNumerals.length; i++) {
-        while (num >= romanNumerals[i].value) {
-          res += romanNumerals[i].symbol;
-          num -= romanNumerals[i].value;
-        }
-      }
-      return res || "0";
     }
 
     setInterval(updateCountdown, 1000);
