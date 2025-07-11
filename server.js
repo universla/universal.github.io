@@ -1,30 +1,31 @@
+
 const express = require('express');
 const axios = require('axios');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Ruta principal
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-// Ruta para recibir el code de Discord
+// Ruta para manejar el login
 app.get('/auth', async (req, res) => {
   const { code } = req.query;
 
   if (!code) {
-    return res.send("No se recibió el código de autorización.");
+    return res.status(400).send("No se recibió el código de autorización.");
   }
 
   try {
     // Intercambiar el code por access_token
-    const response = await axios.post(' https://discord.com/api/oauth2/token ', null, {
+    const response = await axios.post('https://discord.com/api/oauth2/token ', null, {
       params: {
-        client_id: "1392829126372622420",
-        client_secret: "TU_CLIENT_SECRET", // Reemplaza esto con tu secret
-        grant_type: "authorization_code",
+        client_id: "1392829126372622420", // Reemplaza con tu Client ID
+        client_secret: process.env.DISCORD_SECRET, // Guarda tu secret como variable de entorno en Glitch
+        grant_type: 'authorization_code',
         code,
-        redirect_uri: "http://localhost:3000/auth"
+        redirect_uri: 'https://tu-proyecto.glitch.me/auth '
       },
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -42,13 +43,13 @@ app.get('/auth', async (req, res) => {
 
     const user = userResponse.data;
 
-    // Renderizar la información del usuario
+    // Mostrar la información del usuario
     res.send(`
       <!DOCTYPE html>
       <html>
       <head>
         <meta charset="UTF-8" />
-        <title>Usuario de Discord</title>
+        <title>Usuario autenticado</title>
         <style>
           body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -116,11 +117,11 @@ app.get('/auth', async (req, res) => {
     `);
   } catch (error) {
     console.error(error);
-    res.send("Error al iniciar sesión con Discord");
+    res.status(500).send("Error al iniciar sesión con Discord");
   }
 });
 
-// Iniciar servidor
+// Iniciar el servidor
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
