@@ -19,7 +19,7 @@
     <!-- Sección: Login de Discord -->
     <section id="login-section">
       <h2>Inicia sesión con Discord</h2>
-      <a href=" https://discord.com/oauth2/authorize?client_id=1392829126372622420&redirect_uri=http://localhost:800&response_type=code&scope=identify">
+      <a href="https://discord.com/oauth2/authorize?client_id=1392829126372622420&redirect_uri=http://localhost:3000&response_type=code&scope=identify">
         <button>Iniciar Sesión con Discord</button>
       </a>
     </section>
@@ -37,43 +37,6 @@
       </div>
     </section>
   </div>
-
-  <script>
-    // Verificar si hay un token en la URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code");
-
-    if (code) {
-      // Simular el proceso de obtención del token (en producción necesitarías un backend)
-      fetch('http://localhost:800', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ code })
-      })
-      .then(res => res.json())
-      .then(data => {
-        const { access_token } = data;
-
-        fetch(' https://discord.com/api/users/ @me', {
-          headers: {
-            'Authorization': 'Bearer ' + access_token
-          }
-        })
-        .then(res => res.json())
-        .then(user => {
-          document.getElementById("user-name").textContent = user.username;
-          document.getElementById("user-id").textContent = "ID: " + user.id;
-          document.getElementById("user-role").textContent = "Rol: Administrador";
-          document.getElementById("user-avatar").src = `https://cdn.discordapp.com/avatars/ ${user.id}/${user.avatar}.png`;
-          document.getElementById("login-section").style.display = "none";
-          document.getElementById("user-info").style.display = "block";
-        });
-      })
-      .catch(err => console.error(err));
-    }
-  </script>
 
 </body>
 </html>
