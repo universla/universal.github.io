@@ -1,110 +1,127 @@
 
-/* Reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+const express = require('express');
+const axios = require('axios');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f4f6f8;
-  color: #333;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  text-align: center;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-}
+// Ruta principal
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
 
-.background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, #007acc, #005fa3);
-  z-index: 0;
-  animation: moveBackground 20s linear infinite;
-}
+// Ruta para manejar la autorización de Discord
+app.get('/auth', async (req, res) => {
+  const { code } = req.query;
 
-@keyframes moveBackground {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
+  if (!code) {
+    return res.status(400).send("No se recibió el código de autorización.");
+  }
 
-.container {
-  position: relative;
-  z-index: 1;
-  max-width: 500px;
-  padding: 2rem;
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-  animation: fadeIn 1s ease-out;
-}
+  try {
+    // Intercambiar el code por access_token
+    const response = await axios.post(' https://discord.com/api/oauth2/token ', null, {
+      params: {
+        client_id: "1392829126372622420", // Reemplaza con tu Client ID
+        client_secret: process.env.DISCORD_SECRET, // Añade esta variable en Glitch
+        grant_type: 'authorization_code',
+        code,
+        redirect_uri: 'https://tu-proyecto.glitch.me/auth '
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
 
-h1 {
-  font-size: 2.5rem;
-  color: #2c3e50;
-  margin-bottom: 1rem;
-}
+    const { access_token } = response.data;
 
-p {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 2rem;
-}
+    // Obtener información del usuario
+    const userResponse = await axios.get('https://discord.com/api/users/ @me', {
+      headers: {
+        'Authorization': `Bearer ${access_token}`
+      }
+    });
 
-#login-section button {
-  padding: 10px 20px;
-  background-color: #007acc;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s ease;
-}
+    const user = userResponse.data;
 
-#login-section button:hover {
-  background-color: #005fa3;
-}
+    // Mostrar información del usuario
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8" />
+        <title>Usuario autenticado</title>
+        <style>
+          body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+          }
 
-.user-card {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 2rem;
-}
+          .container {
+            max-width: 500px;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+          }
 
-.user-card img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 2px solid #007acc;
-}
+          .user-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: center;
+          }
 
-.user-details {
-  text-align: left;
-}
+          .user-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #007acc;
+          }
 
-.user-details h3 {
-  font-size: 1.5rem;
-  color: #333;
-}
+          .user-details {
+            text-align: left;
+          }
 
-.user-details p {
-  font-size: 1rem;
-  color: #555;
-  margin: 0.5rem 0;
-}
+          .user-details h3 {
+            font-size: 1.5rem;
+            color: #333;
+          }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+          .user-details p {
+            font-size: 1rem;
+            color: #555;
+            margin: 0.5rem 0;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h2>Usuario autenticado</h2>
+          <div class="user-card">
+            <img src="https://cdn.discordapp.com/avatars/ ${user.id}/${user.avatar}.png" alt="Avatar de usuario" />
+            <div class="user-details">
+              <h3>${user.username}</h3>
+              <p>ID: ${user.id}</p>
+              <p>Rol: Administrador</p>
+            </div>
+          </div>
+        </div>
+      </body>
+      </html>
+    `);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al iniciar sesión con Discord");
+  }
+});
+
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
