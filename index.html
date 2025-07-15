@@ -20,16 +20,16 @@
     <section class="server-section">
       <h2>Servidores Disponibles</h2>
 
-      <div class="server-card" onclick="showServer('bedrock')">
+      <div class="server-card" onclick="fetchServerStatus('bedrock', '192.168.1.1')">
         <h3>Minecraft Bedrock</h3>
         <p>IP: 192.168.1.1:19132</p>
-        <p>Estado: <strong class="status-online">Online</strong></p>
+        <p id="bedrock-status">Cargando...</p>
       </div>
 
-      <div class="server-card" onclick="showServer('java')">
+      <div class="server-card" onclick="fetchServerStatus('java', '192.168.1.1')">
         <h3>Minecraft Java</h3>
         <p>IP: 192.168.1.1:25565</p>
-        <p>Estado: <strong class="status-online">Online</strong></p>
+        <p id="java-status">Cargando...</p>
       </div>
 
       <div class="server-card" onclick="showServer('other')">
@@ -71,6 +71,22 @@
   </div>
 
   <script>
+    function fetchServerStatus(type, ip) {
+      if (type === "bedrock") {
+        fetch(`https://api.mcsrvstat.us/bedrock/ ${ip}`)
+          .then(res => res.json())
+          .then(data => {
+            document.getElementById("bedrock-status").textContent = data.status ? "Online" : "Offline";
+          });
+      } else if (type === "java") {
+        fetch(`https://api.mcsrvstat.us/java/ ${ip}`)
+          .then(res => res.json())
+          .then(data => {
+            document.getElementById("java-status").textContent = data.status ? "Online" : "Offline";
+          });
+      }
+    }
+
     function showServer(type) {
       const details = document.getElementById("server-details");
       const title = document.getElementById("server-title");
