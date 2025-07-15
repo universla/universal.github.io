@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login con Discord</title>
+  <title>Host de Servidores</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -13,71 +13,112 @@
   <div class="background"></div>
 
   <div class="container">
-    <h1>ServerStats Bot</h1>
-    <p>Monitorea tus servidores en tiempo real</p>
+    <h1>Host de Servidores</h1>
+    <p>Gestiona tus servidores de forma rápida y sencilla.</p>
 
-    <!-- Sección: Login de Discord -->
-    <section id="login-section">
-      <h2>Inicia sesión con Discord</h2>
-      <a href="https://discord.com/oauth2/authorize?client_id=1392829126372622420&redirect_uri=http://localhost:800&response_type=code&scope=identify">
-        <button>Iniciar Sesión con Discord</button>
-      </a>
+    <!-- Sección: Servidores -->
+    <section class="server-section">
+      <h2>Servidores Disponibles</h2>
+
+      <div class="server-card" onclick="showServer('bedrock')">
+        <h3>Minecraft Bedrock</h3>
+        <p>IP: 192.168.1.1:19132</p>
+        <p>Estado: <strong class="status-online">Online</strong></p>
+      </div>
+
+      <div class="server-card" onclick="showServer('java')">
+        <h3>Minecraft Java</h3>
+        <p>IP: 192.168.1.1:25565</p>
+        <p>Estado: <strong class="status-online">Online</strong></p>
+      </div>
+
+      <div class="server-card" onclick="showServer('other')">
+        <h3>Otro Servidor</h3>
+        <p>IP: 192.168.1.1:25565</p>
+        <p>Estado: <strong class="status-online">Online</strong></p>
+      </div>
+
+      <button onclick="createServer()">Crear Servidor</button>
     </section>
 
-    <!-- Sección: Información del usuario -->
-    <section id="user-info" style="display: none;">
-      <h2>Usuario de Discord</h2>
-      <div class="user-card">
-        <img id="user-avatar" src="" alt="Avatar de usuario" />
-        <div class="user-details">
-          <h3 id="user-name">Cargando...</h3>
-          <p id="user-id">Cargando...</p>
-          <p id="user-role">Cargando...</p>
-        </div>
-      </div>
+    <!-- Detalles del servidor -->
+    <section id="server-details" class="server-details" style="display: none;">
+      <h2 id="server-title">Detalles del Servidor</h2>
+      <p id="server-ip">IP: 192.168.1.1:19132</p>
+      <p id="server-type">Tipo: Minecraft Bedrock</p>
+      <p id="server-status">Estado: <strong class="status-online">Online</strong></p>
+      <p>Uptime: 24/7</p>
+      <button onclick="goBack()">Volver</button>
+    </section>
+
+    <!-- Formulario para crear servidor -->
+    <section id="create-server-form" class="server-details" style="display: none;">
+      <h2>Crear Nuevo Servidor</h2>
+      <form onsubmit="submitServer(event)">
+        <label for="server-name">Nombre del Servidor:</label>
+        <input type="text" id="server-name" required><br>
+        <label for="server-type">Tipo de Servidor:</label>
+        <select id="server-type">
+          <option value="bedrock">Minecraft Bedrock</option>
+          <option value="java">Minecraft Java</option>
+          <option value="other">Otro Juego</option>
+        </select><br>
+        <label for="server-ip">IP del Servidor:</label>
+        <input type="text" id="server-ip" required><br>
+        <button type="submit">Crear</button>
+      </form>
     </section>
   </div>
 
   <script>
-    // Simular el flujo de autorización con solo JavaScript
-    const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get("code");
+    function showServer(type) {
+      const details = document.getElementById("server-details");
+      const title = document.getElementById("server-title");
+      const ip = document.getElementById("server-ip");
+      const typeText = document.getElementById("server-type");
+      const status = document.getElementById("server-status");
 
-    if (code) {
-      // Simulación de obtención del token (en producción necesitarías un backend)
-      fetch(' https://discord.com/api/oauth2/token ', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
-          client_id: '1392829126372622420',
-          client_secret: 'TU_CLIENT_SECRET',
-          grant_type: 'authorization_code',
-          code,
-          redirect_uri: 'http://localhost:800'
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        const { access_token } = data;
+      if (type === "bedrock") {
+        title.textContent = "Minecraft Bedrock";
+        ip.textContent = "IP: 192.168.1.1:19132";
+        typeText.textContent = "Tipo: Minecraft Bedrock";
+        status.textContent = "Estado: <strong class='status-online'>Online</strong>";
+      } else if (type === "java") {
+        title.textContent = "Minecraft Java";
+        ip.textContent = "IP: 192.168.1.1:25565";
+        typeText.textContent = "Tipo: Minecraft Java";
+        status.textContent = "Estado: <strong class='status-online'>Online</strong>";
+      } else {
+        title.textContent = "Servidor Personalizado";
+        ip.textContent = "IP: 192.168.1.1:25565";
+        typeText.textContent = "Tipo: Otro Juego";
+        status.textContent = "Estado: <strong class='status-online'>Online</strong>";
+      }
 
-        fetch('https://discord.com/api/users/ @me', {
-          headers: {
-            'Authorization': 'Bearer ' + access_token
-          }
-        })
-        .then(res => res.json())
-        .then(user => {
-          document.getElementById("user-name").textContent = user.username;
-          document.getElementById("user-id").textContent = "ID: " + user.id;
-          document.getElementById("user-role").textContent = "Rol: Administrador";
-          document.getElementById("user-avatar").src = `https://cdn.discordapp.com/avatars/ ${user.id}/${user.avatar}.png`;
-          document.getElementById("login-section").style.display = "none";
-          document.getElementById("user-info").style.display = "block";
-        });
-      })
-      .catch(err => console.error(err));
+      details.style.display = "block";
+    }
+
+    function goBack() {
+      document.getElementById("server-details").style.display = "none";
+    }
+
+    function createServer() {
+      document.getElementById("server-details").style.display = "none";
+      document.getElementById("create-server-form").style.display = "block";
+    }
+
+    function submitServer(e) {
+      e.preventDefault();
+      const name = document.getElementById("server-name").value;
+      const type = document.getElementById("server-type").value;
+      const ip = document.getElementById("server-ip").value;
+
+      // Simular la creación de servidor
+      alert(`Servidor creado:\nNombre: ${name}\nTipo: ${type}\nIP: ${ip}`);
+
+      // Reiniciar formulario
+      document.getElementById("create-server-form").style.display = "none";
+      document.getElementById("server-details").style.display = "block";
     }
   </script>
 
