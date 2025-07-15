@@ -47,6 +47,8 @@
       <p id="server-ip">IP: 192.168.1.1:19132</p>
       <p id="server-type">Tipo: Minecraft Bedrock</p>
       <p id="server-status">Estado: <strong class="status-online">Online</strong></p>
+      <p id="server-version">Versión: 1.19.8</p>
+      <p id="server-players">Jugadores: 2/20</p>
       <p>Uptime: 24/7</p>
       <button onclick="goBack()">Volver</button>
     </section>
@@ -77,12 +79,14 @@
           .then(res => res.json())
           .then(data => {
             document.getElementById("bedrock-status").textContent = data.status ? "Online" : "Offline";
+            document.getElementById("bedrock-status").className = data.status ? "status-online" : "status-offline";
           });
       } else if (type === "java") {
         fetch(`https://api.mcsrvstat.us/java/ ${ip}`)
           .then(res => res.json())
           .then(data => {
             document.getElementById("java-status").textContent = data.status ? "Online" : "Offline";
+            document.getElementById("java-status").className = data.status ? "status-online" : "status-offline";
           });
       }
     }
@@ -93,22 +97,30 @@
       const ip = document.getElementById("server-ip");
       const typeText = document.getElementById("server-type");
       const status = document.getElementById("server-status");
+      const version = document.getElementById("server-version");
+      const players = document.getElementById("server-players");
 
       if (type === "bedrock") {
         title.textContent = "Minecraft Bedrock";
         ip.textContent = "IP: 192.168.1.1:19132";
         typeText.textContent = "Tipo: Minecraft Bedrock";
         status.textContent = "Estado: <strong class='status-online'>Online</strong>";
+        version.textContent = "Versión: 1.19.8";
+        players.textContent = "Jugadores: 2/20";
       } else if (type === "java") {
         title.textContent = "Minecraft Java";
         ip.textContent = "IP: 192.168.1.1:25565";
         typeText.textContent = "Tipo: Minecraft Java";
         status.textContent = "Estado: <strong class='status-online'>Online</strong>";
+        version.textContent = "Versión: 1.19.8";
+        players.textContent = "Jugadores: 2/20";
       } else {
         title.textContent = "Servidor Personalizado";
         ip.textContent = "IP: 192.168.1.1:25565";
         typeText.textContent = "Tipo: Otro Juego";
         status.textContent = "Estado: <strong class='status-online'>Online</strong>";
+        version.textContent = "Versión: 1.19.8";
+        players.textContent = "Jugadores: 2/20";
       }
 
       details.style.display = "block";
