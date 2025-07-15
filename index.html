@@ -70,9 +70,66 @@
         <button type="submit">Crear</button>
       </form>
     </section>
+
+    <!-- Repositorio de servidores -->
+    <section id="server-repo" class="server-details" style="display: none;">
+      <h2>Repositorio de Servidores</h2>
+      <ul id="server-list"></ul>
+    </section>
   </div>
 
   <script>
+    // Cargar servidores desde localStorage
+    function loadServersFromStorage() {
+      const servers = JSON.parse(localStorage.getItem("servers")) || [];
+      const list = document.getElementById("server-list");
+      list.innerHTML = "";
+
+      if (servers.length === 0) {
+        list.innerHTML = "<li>No hay servidores guardados.</li>";
+        return;
+      }
+
+      servers.forEach((server, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <strong>${server.name}</strong> - ${server.type}
+          <p>IP: ${server.ip}</p>
+          <button onclick="useServer(${index})">Usar</button>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    // Usar un servidor guardado
+    function useServer(index) {
+      const servers = JSON.parse(localStorage.getItem("servers")) || [];
+      const server = servers[index];
+
+      showServerDetails(server);
+      document.getElementById("server-repo").style.display = "none";
+    }
+
+    // Mostrar detalles del servidor
+    function showServerDetails(server) {
+      const details = document.getElementById("server-details");
+      const title = document.getElementById("server-title");
+      const ip = document.getElementById("server-ip");
+      const typeText = document.getElementById("server-type");
+      const status = document.getElementById("server-status");
+      const version = document.getElementById("server-version");
+      const players = document.getElementById("server-players");
+
+      title.textContent = server.name;
+      ip.textContent = "IP: " + server.ip;
+      typeText.textContent = "Tipo: " + server.type;
+      status.textContent = "Estado: <strong class='status-online'>Online</strong>";
+      version.textContent = "Versión: 1.19.8";
+      players.textContent = "Jugadores: 2/20";
+
+      details.style.display = "block";
+    }
+
     function fetchServerStatus(type, ip) {
       if (type === "bedrock") {
         fetch(`https://api.mcsrvstat.us/bedrock/ ${ip}`)
@@ -80,6 +137,8 @@
           .then(data => {
             document.getElementById("bedrock-status").textContent = data.status ? "Online" : "Offline";
             document.getElementById("bedrock-status").className = data.status ? "status-online" : "status-offline";
+            document.getElementById("server-details").style.display = "block";
+            showServerDetails({ name: "Bedrock Server", type: "bedrock", ip: ip });
           });
       } else if (type === "java") {
         fetch(`https://api.mcsrvstat.us/java/ ${ip}`)
@@ -87,8 +146,15 @@
           .then(data => {
             document.getElementById("java-status").textContent = data.status ? "Online" : "Offline";
             document.getElementById("java-status").className = data.status ? "status-online" : "status-offline";
+            document.getElementById("server-details").style.display = "block";
+            showServerDetails({ name: "Java Server", type: "java", ip: ip });
           });
       }
+    }
+
+    function createServer() {
+      document.getElementById("server-details").style.display = "none";
+      document.getElementById("create-server-form").style.display = "block";
     }
 
     function showServer(type) {
@@ -111,7 +177,7 @@
         title.textContent = "Minecraft Java";
         ip.textContent = "IP: 192.168.1.1:25565";
         typeText.textContent = "Tipo: Minecraft Java";
-        status.textContent = "Estado: <strong class='status-online'>Online</strong>";
+        status.textContent = "Estado: <strong class='status-online'>Online</h1>";
         version.textContent = "Versión: 1.19.8";
         players.textContent = "Jugadores: 2/20";
       } else {
@@ -120,7 +186,7 @@
         typeText.textContent = "Tipo: Otro Juego";
         status.textContent = "Estado: <strong class='status-online'>Online</strong>";
         version.textContent = "Versión: 1.19.8";
-        players.textContent = "Jugadores: 2/20";
+        players.textContent = "Jugadores: 2/24";
       }
 
       details.style.display = "block";
@@ -130,9 +196,10 @@
       document.getElementById("server-details").style.display = "none";
     }
 
-    function createServer() {
+    function showServerList() {
       document.getElementById("server-details").style.display = "none";
-      document.getElementById("create-server-form").style.display = "block";
+      document.getElementById("server-repo").style.display = "block";
+      loadServersFromStorage();
     }
 
     function submitServer(e) {
@@ -141,13 +208,44 @@
       const type = document.getElementById("server-type").value;
       const ip = document.getElementById("server-ip").value;
 
-      // Simular la creación de servidor
+      const server = { name, type, ip };
+      let servers = JSON.parse(localStorage.getItem("servers")) || [];
+      servers.push(server);
+      localStorage.setItem("servers", JSON.stringify(servers));
+
       alert(`Servidor creado:\nNombre: ${name}\nTipo: ${type}\nIP: ${ip}`);
 
-      // Reiniciar formulario
       document.getElementById("create-server-form").style.display = "none";
       document.getElementById("server-details").style.display = "block";
     }
+
+    function showServerDetails(server) {
+      const details = document.getElementById("server-details");
+      const title = document.getElementById("server-title");
+      const ip = document.getElementById("server-ip");
+      const typeText = document.getElementById("server-type");
+      const status = document.getElementById("server-status");
+      const version = document.getElementById("server-version");
+      const players = document.getElementById("server-players");
+
+      title.textContent = server.name;
+      ip.textContent = "IP: " + server.ip;
+      typeText.textContent = "Tipo: " + server.type;
+      status.textContent = "Estado: <strong class='status-online'>Online</strong>";
+      version.textContent = "Versión: 1.19.8";
+      players.textContent = "Jugadores: 2/20";
+
+      details.style.display = "block";
+    }
+
+    // Cargar servidores al iniciar
+    window.onload = () => {
+      const servers = JSON.parse(localStorage.getItem("servers")) || [];
+      if (servers.length > 0) {
+        document.getElementById("server-repo").style.display = "block";
+        loadServersFromStorage();
+      }
+    };
   </script>
 
 </body>
