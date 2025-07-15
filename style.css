@@ -95,6 +95,11 @@ p {
   font-weight: bold;
 }
 
+.status-offline {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
 .server-details {
   margin-top: 2rem;
   text-align: left;
