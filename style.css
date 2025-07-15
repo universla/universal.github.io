@@ -168,6 +168,33 @@ p {
   background-color: #005fa3;
 }
 
+#server-list {
+  margin-top: 2rem;
+  text-align: left;
+}
+
+#server-list li {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+#server-list button {
+  margin-top: 0.5rem;
+  padding: 5px 10px;
+  background-color: #007acc;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+#server-list button:hover {
+  background-color: #005fa3;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-20px); }
   to { opacity: 1; transform: translateY(0); }
