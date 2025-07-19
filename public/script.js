@@ -1,3 +1,4 @@
+
 // Cargar publicaciones desde el backend
 async function loadPosts() {
   const res = await fetch('/posts');
@@ -8,7 +9,7 @@ async function loadPosts() {
   posts.forEach(p => {
     const div = document.createElement('div');
     div.className = 'post';
-    div.innerHTML = `<strong>${p.user}</strong>:<br>${p.content}`;
+    div.innerHTML = p.content;
     feed.appendChild(div);
   });
 }
