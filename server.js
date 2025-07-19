@@ -1,3 +1,4 @@
+
 const express = require('express');
 const app = express();
 const low = require('lowdb');
@@ -6,7 +7,7 @@ const adapter = new FileSync('db.json');
 const db = low(adapter);
 
 // Inicializar base de datos
-db.defaults({ users: [], posts: [] }).write();
+db.defaults({ posts: [] }).write();
 
 // Middleware
 app.use(express.static('public'));
@@ -18,17 +19,10 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-// Registro de usuario
-app.post('/signup', (req, res) => {
-  const { username } = req.body;
-  db.get('users').push({ username }).write();
-  res.redirect('/');
-});
-
 // Crear publicación
 app.post('/post', (req, res) => {
-  const { content, user } = req.body;
-  db.get('posts').push({ content, user }).write();
+  const { content } = req.body;
+  db.get('posts').push({ content }).write();
   res.redirect('/');
 });
 
