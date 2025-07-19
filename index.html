@@ -1,21 +1,33 @@
+
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Glitch Social</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1 class="glitch">Glitch Social</h1>
+  <header>
+    <h1 class="glitch">Glitch Social</h1>
+    <nav>
+      <a href="profile.html">Perfil</a>
+      <a href="#" id="logout">Cerrar sesión</a>
+    </nav>
+  </header>
 
-  <form id="post-form">
-    <input type="text" id="post-input" placeholder="Escribe algo glitch..." required />
-    <button type="submit">Glitch It!</button>
-  </form>
+  <main>
+    <section id="create-post">
+      <h2>Crear Publicación</h2>
+      <form id="post-form">
+        <textarea id="post-content" placeholder="Escribe algo glitch..." required></textarea>
+        <input type="file" id="post-media" accept="image/*,video/*">
+        <button type="submit">Glitch It!</button>
+      </form>
+    </section>
 
-  <h2>Publicaciones</h2>
-  <div id="feed"></div>
+    <section id="feed"></section>
+  </main>
 
   <script src="script.js"></script>
 </body>
