@@ -2,12 +2,12 @@
 body {
   background: black;
   color: white;
-  font-family: 'Courier New', monospace;
+  font-family: monospace;
   padding: 1em;
   text-align: center;
 }
 
-input, textarea {
+input {
   width: 90%;
   padding: 10px;
   margin: 10px 0;
