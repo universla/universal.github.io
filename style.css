@@ -7,7 +7,7 @@ body {
   text-align: center;
 }
 
-input {
+input, textarea {
   width: 90%;
   padding: 10px;
   margin: 10px 0;
@@ -28,7 +28,6 @@ button {
 }
 
 .glitch {
-  font-size: 2em;
   position: relative;
   color: white;
   animation: glitch 2s infinite;
@@ -50,4 +49,9 @@ button {
   padding: 10px;
   background: #222;
   animation: glitch 1s ease-in-out infinite alternate;
+}
+
+.comments {
+  text-align: left;
+  margin-top: 10px;
 }
